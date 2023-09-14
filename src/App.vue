@@ -1,26 +1,78 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <div class="pb-20 flex flex-col bg-slate-50">
+      <SiteNav />
+    </div>
+    <div>
+      
+      
+    </div>
+
+    <div class="flex flex-col bg-slate-50">
+      <LeftSide />
+      <ProductDetail />
+    </div>
+    <div>
+        
+        
+    </div>
+    
+    
+  </div>
+
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+<script>
+
+import LeftSide from "./components/LeftSide.vue";
+import SiteNav from "./components/SiteNav.vue"
+import ProductDetail from "./components/product-detail.vue";
+
+
+
+// export default {
+//   name: 'App',
+//   components: {
+//     ProductList
+//   }
+// }
+
+import axios from 'axios'
+
+  export default {
+    data() {
+        return {
+            title: "Product IPhone",
+            products: [],
+        };
+    },
+    mounted() {
+        // let data_product = this
+        axios
+            .get('https://interview.com7.in/api/pre-order')
+            // .then(respone => console.log(respone.data.data));
+            // .then(response => this.products = response.data.data)
+            .then((resp) => {
+            // console.log(resp.data.data)
+            this.products = resp.data.data.main_product;
+            // console.log(this.products)
+        })
+            .catch((err) => {
+            console.error('Error fetching product data:', err);
+        });
+    },
+    components: { SiteNav, ProductDetail, LeftSide }
 }
+
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  
+  
 }
 </style>
